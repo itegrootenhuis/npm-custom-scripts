@@ -8,7 +8,7 @@
   "scripts": {
     "new": "npm run prompt && npm run --silent generate-populater & npm run --silent generate-viewmodel",
     "prompt": "node prompt.js",
-    "prompt-list": "node prompt.js && node list.js",
+    "main": "node program.js",
     "generate-populater": "node generate-populater.js",
     "generate-viewmodel": "node generate-viewmodel.js"
   },
@@ -18,6 +18,7 @@
   "description": "",
   "dependencies": {
     "async-foreach": "^0.1.3",
+    "babel-runtime": "^6.26.0",
     "create-file": "^1.0.1",
     "find": "^0.2.9",
     "fs": "0.0.1-security",

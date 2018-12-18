@@ -1,3 +1,4 @@
+var exports = module.exports = {};
 var inquirer = require('inquirer');
 
 let startQuestions = [
@@ -7,7 +8,9 @@ let startQuestions = [
     {type: 'list',  name: 'viewModelTemplate', message: 'Choose a template for the viewModel', choices: ['$BaseClassName$ViewModel', '$BaseClassName$LandingViewModel(future template)']},
 ];
 
-inquirer.prompt(startQuestions)
-  .then(answers => {
-      console.log(answers, 'feedback')
-  });
+exports.response = async function(){
+    inquirer.prompt(startQuestions)
+    .then(answers => {
+        return answers
+    });
+}
