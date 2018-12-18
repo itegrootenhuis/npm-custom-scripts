@@ -1,4 +1,5 @@
 const prompt = require('./prompt.js');
 
-prompt.response().then(response => console.log(response))
+let response = prompt.response();
 
+ 

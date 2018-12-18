@@ -1,7 +1,7 @@
 var exports = module.exports = {};
 var inquirer = require('inquirer');
 
-let startQuestions = [
+let questions = [
     {type: 'input', name: 'baseClassName', message: 'Enter the baseClassName'},
     {type: 'input', name: 'projectRoot', message: 'Enter the project root'},
     {type: 'list',  name: 'populaterTemplate', message: 'Choose a template for the populater', choices: ['$BaseClassName$Populater', '$BaseClassName$LandingPopulater(future template)']},
@@ -9,7 +9,7 @@ let startQuestions = [
 ];
 
 exports.response = async function(){
-    inquirer.prompt(startQuestions)
+    inquirer.prompt(questions)
     .then(answers => {
         return answers
     });
