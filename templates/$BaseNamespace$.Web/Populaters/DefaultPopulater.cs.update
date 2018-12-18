@@ -1,0 +1,18 @@
+[
+{
+	 "find":   "                /*AUTO-GEN-TEMPLATE-POPULATER-CASE*/"
+	,"replace": 
+"				case $BaseClassName$Node.CLASS_NAME:
+					return new $BaseClassName$Populater( HttpContext ).Populate();
+
+                /*AUTO-GEN-TEMPLATE-POPULATER-CASE*/"
+},
+{
+	 "find":   "                /*AUTO-GEN-TEMPLATE-POPULATER-CASE*/"
+	,"replace": 
+"				case $BaseClassName$LandingNode.CLASS_NAME:
+					return new $BaseClassName$LandingPopulater( HttpContext ).Populate();
+
+                /*AUTO-GEN-TEMPLATE-POPULATER-CASE*/"
+}
+]

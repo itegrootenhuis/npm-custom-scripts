@@ -1,0 +1,8 @@
+[
+{
+	 "find":   "// -- Content Modules"
+	,"replace": 
+"// -- Content Modules
+@import \"modules/content/_$baseclassname$.scss\";"
+}
+]

@@ -1,0 +1,15 @@
+@model $BaseClassName$ViewModel
+
+
+<div class="$baseclassname$">
+	@Html.DisplayFor( m => m.Breadcrumbs, "Breadcrumbs" )
+    @*@Html.Partial("Includes/Content/_PageHeading", Model.PageHeading)*@
+
+    <div class="container-fluid">
+
+        <div class="$baseclassname$-detail">
+            @Html.Raw( Model.Body )
+        </div>
+
+    </div>
+</div>

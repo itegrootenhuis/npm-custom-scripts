@@ -1,56 +1,37 @@
-var prompt = require('prompt');
 var createFile = require('create-file');
-var find = require('find');
+var promise = require('promise');
+var dir = require('node-dir');
 
-var schema = {
-  properties: {
-    prefix: {
-      reuired: true,
-      type: 'string'
-    },
-    projectPath:{
-      reuired: true,
-      type: 'string'
-    }
-  }
-}
- 
-  //
-  // Start the prompt
-  //
-  prompt.start();
- 
-  //
-  // Get two properties from the user: username and email
-  //
-  prompt.get(schema, function (err, result) {
-    //
-    // Log the results.
-    //
-    console.log('Command-line input received:');
-    console.log('  prefix: ' + result.prefix);
-    console.log('  File Name will be : ' + result.prefix+'ViewModel');
+var projectPath, prefix;
 
-    generateFile(getViewModelPath(result.projectPath), result.prefix+'ViewModel.cs');
+
+async function generateFile(projectPath, fileName) {
+  var viewModelPath = await getViewModelPath(projectPath)
+  
+  createFile(viewModelPath +'/'+ fileName, '', function(err){
+    if (err) throw err;
+    
+    console.log("Successfully created " + fileName + "!")
   });
+}
 
 
-  getViewModelPath = function (projectPath) { 
-    find.file(projectPath, function(files){
-      // console.log(files)
-      files.forEach(file => {
-        console.log('in loop ', file)
-        if(file.includes('*.Web\\ViewModels\\')){
-          console.log('condition met ', file);
+async function getViewModelPath(projectPath){
+  return new promise(resolve => {
+    
+    dir.subdirs(projectPath, function(err, subdirs) {
+      if (err) throw err;
+      
+      subdirs.forEach(subdir => {
+        if(subdir.includes('ViewModels')){
+          resolve(subdir)
         }
       });
-    });
-  }
-
-
-  generateFile = function (path, fileName) {
-    console.log('genfile')
-    // createFile(path +'/'+ fileName, '', function(err){
       
-    // });
-  }
+    });
+  });
+}
+
+
+console.log("path: ", projectPath, "\nprefix: ", prefix)
+generateFile(projectPath, prefix+'ViewModel.cs');
