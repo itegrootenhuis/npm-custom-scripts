@@ -1,0 +1,20 @@
+/// <reference path="../../base/_variables.scss" />
+/// <reference path="../../base/_mixins.scss" />
+
+.$baseclassname$ {
+
+	/* Custom rules here */
+
+	.$baseclassname$-landing {
+		/* Custom classes for "list"/"grid" view here 
+		   Optional: You might want to break this out into it's own file: _.$baseclassname$-landing.scss
+		*/
+	}
+
+	.$baseclassname$-detail {
+		/* Custom classes for "detail" (single object) view here 
+		   Optional: You might want to break this out into it's own file: _.$baseclassname$-detail.scss
+		*/
+	}
+
+}

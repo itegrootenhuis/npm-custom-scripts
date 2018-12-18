@@ -8,6 +8,7 @@
   "scripts": {
     "new": "npm run prompt && npm run --silent generate-populater & npm run --silent generate-viewmodel",
     "prompt": "node prompt.js",
+    "prompt-list": "node prompt.js && node list.js",
     "generate-populater": "node generate-populater.js",
     "generate-viewmodel": "node generate-viewmodel.js"
   },
@@ -21,9 +22,12 @@
     "find": "^0.2.9",
     "fs": "0.0.1-security",
     "fs-finder": "^1.8.1",
+    "inquirer": "^6.2.1",
     "node-dir": "^0.1.17",
     "node-find-folder": "^0.1.32",
     "promise": "^8.0.2",
-    "prompt": "^1.0.0"
+    "prompt": "^1.0.0",
+    "prompt-choices": "^5.0.0",
+    "prompt-list": "^3.2.0"
   }
 }

@@ -1,0 +1,15 @@
+[
+{
+	 "find":   "            /*AUTO-GEN-TEMPLATE-SERVICE-LOCATOR*/"
+	,"replace": 
+"			ServiceLocator.Set<I$BaseClassName$Service, $BaseClassName$Service>();
+            /*AUTO-GEN-TEMPLATE-SERVICE-LOCATOR*/"
+},
+{
+	 "find":   "            /*AUTO-GEN-TEMPLATE-SERVICE-LOCATOR*/"
+	,"replace": 
+"			ServiceLocator.Set<I$BaseClassName$LandingService, $BaseClassName$LandingService>();
+            /*AUTO-GEN-TEMPLATE-SERVICE-LOCATOR*/"
+}
+
+]

@@ -1,0 +1,15 @@
+@model $BaseClassName$LandingViewModel
+
+
+<div class="$baseclassname$">
+	@Html.DisplayFor( m => m.Breadcrumbs, "Breadcrumbs" )
+	@*@Html.Partial("Includes/Content/_PageHeading", Model.PageHeading)*@
+
+	<div class="container-fluid">
+
+		<div class="$baseclassname$-landing">
+			@Html.DisplayFor( m => m.$BaseClassNamePlural$ )
+		</div>
+
+	</div>
+</div>
