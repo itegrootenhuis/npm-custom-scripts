@@ -19,6 +19,7 @@
   "dependencies": {
     "async-foreach": "^0.1.3",
     "babel-runtime": "^6.26.0",
+    "copy": "^0.3.2",
     "create-file": "^1.0.1",
     "find": "^0.2.9",
     "fs": "0.0.1-security",
@@ -29,6 +30,7 @@
     "promise": "^8.0.2",
     "prompt": "^1.0.0",
     "prompt-choices": "^5.0.0",
-    "prompt-list": "^3.2.0"
+    "prompt-list": "^3.2.0",
+    "replace-in-file": "^3.4.2"
   }
 }
