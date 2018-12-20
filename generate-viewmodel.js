@@ -5,24 +5,9 @@ const dir = require('node-dir');
 const promise = require('promise');
 const replace = require('replace-in-file');
 
-
-// var projectPath, prefix;
-
-
-// async function generateFile(projectPath, fileName) {
-//   var viewModelPath = await getViewModelPath(projectPath)
-  
-//   createFile(viewModelPath +'/'+ fileName, '', function(err){
-//     if (err) throw err;
-    
-//     console.log("Successfully created " + fileName + "!")
-//   });
-// }
-
-
-async function getViewModelPath(projectRoot){
+//todo: pull this function into a utility and update it to accept both viewmodel and populater
+async function getViewModelDirectoryPath(projectRoot){
   return new promise(resolve => {
-    console.log('getViewModelPath', projectRoot)
 
     dir.subdirs(projectRoot, function(err, subdirs) {
       if (err) throw err;
@@ -32,52 +17,46 @@ async function getViewModelPath(projectRoot){
           resolve(subdir)
         }
       });
-      
     });
   });
 }
 
+exports.getTemplate = async function(templateName, projectRoot){
+  let targetPath = await getViewModelDirectoryPath(projectRoot);
+  let templatePath = await getViewModelDirectoryPath('D:/BZS/npm-custom-scripts/templates');
 
-exports.getTemplate = async function(templateName, baseNamespace){
-  let templatePath = '/templates/' + baseNamespace + '.Web/ViewModels/';
+  console.log('fetching template...')
+  
+  return new Promise (resolve => {
+    copy(templatePath + '\\' + templateName + '.*', targetPath, function(err, template){
+      if(err) throw err;
 
-
-  console.log('getTemplate1: ', templateName + '.cs', templatePath)
-  copy(templateName + '.cs', templatePath, function(err, template){
-    // if(err) throw err;
-    console.log('getTemplate2: ', template)
-    return template
-  });  
+      resolve(targetPath) 
+    });  
+  })
 }
 
-exports.putTemplate = async function(template, baseClassName, projectRoot){
-  console.log('putTemplate: ', template, baseClassName, projectRoot)
-  let filePath = await getViewModelPath(projectRoot);
 
-  createFile(filePath +'/'+ baseClassName + 'ViewModel.cs', template, function(err){
-    if(err) throw err;
-  });
-  // console.log('FILEPATH: ', filePath)
-  return filePath
-}
+exports.updateTemplate = async function(targetPath, templateName, baseClassName, baseNamespace){
+  //todo: rename file
+  console.log('updating file...')
+  return new Promise (resolve => {
 
-exports.updateTemplate = async function(filePath, baseClassName, baseNamespace){
-  console.log('updateTemplate')
-  var message;
-  const options = {
-    files: filePath,
-    from: ['$BaseClassName$/g', '$BaseNamespace$/g'],
-    to: [baseClassName, baseNamespace]
-  }
-
-  try {
-    const changes = await replace(options); 
-    console.log(changes)
-    message = 'ViewModel generation success!'
-  }
-  catch(err){
-    console.log(err)
-  }
-
-  return message;
+    setTimeout(function(){
+      const options = {
+        files: targetPath + '\\' + templateName + '.cs',
+        from: [/\$BaseClassName\$/g, /\$BaseNamespace\$/g],
+        to: [baseClassName, baseNamespace]
+      }
+      
+      replace(options)
+      .then(changes => {
+        console.log('updated files:  ', changes)
+        resolve('ViewModel updated success!');
+      })
+      .catch(err => {
+        console.log('Error occured: ', err)
+      })
+    }, 2000);
+  })
 }

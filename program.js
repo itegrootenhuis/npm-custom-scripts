@@ -24,10 +24,9 @@ async function buildFile (answers){
     //         .then(filePath => genPopulater.updatePopulater(filePath, answers.baseClassName))
     //             .then(message => console.log(message)));
     
-    genViewModel.getTemplate(answers.viewModelTemplate, answers.baseNamespace)
-        .then(template => genViewModel.putTemplate(template, answers.baseClassName, answers.projectRoot)
-            .then(filePath => genViewModel.updatePopulater(filePath, baseClassName, answers.baseClassName))
-                .then(message => console.log(message)));
+    genViewModel.getTemplate(answers.viewModelTemplate, answers.projectRoot)
+        .then(targetPath => genViewModel.updateTemplate(targetPath, answers.viewModelTemplate, answers.baseClassName, answers.baseNamespace))
+            .then(message => console.log(message));
     
     
     // generateFile.getTemplate(answers.populaterTemplate)
