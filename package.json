@@ -31,6 +31,7 @@
     "prompt": "^1.0.0",
     "prompt-choices": "^5.0.0",
     "prompt-list": "^3.2.0",
+    "rename": "^1.0.4",
     "replace-in-file": "^3.4.2"
   }
 }
