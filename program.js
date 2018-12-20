@@ -1,4 +1,3 @@
-// const genPopulater = require('./generate-populater');
 const generateFile = require('./generate-file.js');
 const inquirer = require('inquirer');
 const viewModelFolderName = 'ViewModel';
@@ -15,7 +14,7 @@ let questions = [
 
 
 inquirer.prompt(questions)
-    .then(answers => Promise.all(buildFile(answers, populaterFolderName), buildFile(answers, viewModelFolderName)))
+    .then(answers => Promise.all([ buildFile(answers, populaterFolderName), buildFile(answers, viewModelFolderName) ]))
 
 
 async function buildFile (answers, fileType){
