@@ -11,7 +11,8 @@ exports.getDirectoryPath = async function (projectRoot, targetFolder){
   
         subdirs.forEach(subdir => {
           if(subdir.includes(targetFolder)){
-            resolve(subdir)
+            // console.log('*************getDirectoryPath ', subdir, targetFolder)
+            resolve(subdir);
           }
         });
       });
