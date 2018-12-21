@@ -3,11 +3,12 @@ const copy = require('copy');
 const fs = require('fs');
 const replace = require('replace-in-file');
 const Helpers  = require('./utilities/getDirectoryPath');
+const templateFolder = './templates'
 
 
 exports.getTemplate = async function(templateName, projectRoot, fileType){
   let targetPath = await Helpers.getDirectoryPath(projectRoot, fileType);   
-  let templatePath = await Helpers.getDirectoryPath('D:/BZS/npm-custom-scripts/templates', fileType);
+  let templatePath = await Helpers.getDirectoryPath(templateFolder, fileType);
 
   console.log('fetching ' + fileType + ' template...')
   
