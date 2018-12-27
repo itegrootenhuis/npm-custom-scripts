@@ -25,18 +25,18 @@ inquirer.prompt(questions)
 
 async function buildFile (answers, fileType){
     if(fileType === 'Populaters'){
-        return generateFile.getTemplate(answers.populaterTemplate, answers.projectRoot, fileType)
+        return generateFile.getTemplate(answers.populaterTemplate, answers.projectRoot, fileType, answers.baseClassName)
             .then(targetPath => generateFile.updateTemplate(targetPath, answers.populaterTemplate, answers.baseClassName, answers.baseNamespace, fileType))
                 .then(message => console.log(message));
         
     }
     else if(fileType === 'Views'){
-        return generateFile.getTemplate(answers.viewTemplate, answers.projectRoot, fileType)
+        return generateFile.getTemplate(answers.viewTemplate, answers.projectRoot, fileType, answers.baseClassName)
             .then(targetPath => generateFile.updateTemplate(targetPath, answers.viewTemplate, answers.baseClassName, answers.baseNamespace, fileType))
                 .then(message => console.log(message));
     }
     else if(fileType === 'ViewModels'){
-        return generateFile.getTemplate(answers.viewModelTemplate, answers.projectRoot, fileType)
+        return generateFile.getTemplate(answers.viewModelTemplate, answers.projectRoot, fileType, answers.baseClassName)
             .then(targetPath => generateFile.updateTemplate(targetPath, answers.viewModelTemplate, answers.baseClassName, answers.baseNamespace, fileType))
                 .then(message => console.log(message));
     }
