@@ -14,19 +14,21 @@ exports.getFileExtension = async function (templateName){
     });
 }
 
-exports.createFolder = async function (targetPath, baseClassName){
-    fs.mkdir(targetPath + '\\' + baseClassName, function (err) { 
-        if(err) throw err;
-     });
-}
-
 exports.fsOptions = async function(targetPath, templateName, fileExtension, baseClassName, baseNamespace){
+    var file;
+
+    if(fileExtension.includes('.cshtml')){
+        file = targetPath + '\\' + baseClassName + '\\' + templateName + fileExtension;
+    }
+    else{
+        file = targetPath + '\\' + templateName + fileExtension;
+    }
+    
     return new Promise (resolve => {
-        
         resolve(options = {
-            files: targetPath + '\\' + templateName + fileExtension,
+            files: file,
             from: [/\$BaseClassName\$/g, /\$baseclassname\$/g, /\$BaseNamespace\$/g],
-            to: [baseClassName, baseClassName, baseNamespace]
+            to: [baseClassName, baseClassName.toLowerCase(), baseNamespace]
         });
     });
 }
