@@ -43,7 +43,7 @@ async function buildFile (answers, fileType){
 }
 
 
-async function notNull(answer, errorMessage, root){
+async function notNull(answer, errorMessage){
     return new Promise(resolve => {
         if(answer){
             resolve(true);
