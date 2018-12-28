@@ -9,9 +9,9 @@ let questions = [
     {type: 'input', name: 'baseClassName',      message: 'Enter the baseClassName'},
     {type: 'input', name: 'baseNamespace',      message: 'Enter the baseNamespace'},
     {type: 'input', name: 'projectRoot',        message: 'Enter the project root (right click to paste)'},
-    {type: 'list',  name: 'populaterTemplate',  message: 'Choose a template for the populater', choices: ['$BaseClassName$Populater', '$BaseClassName$LandingPopulater(future template)']},
+    {type: 'list',  name: 'populaterTemplate',  message: 'Choose a template for the populater', choices: ['$BaseClassName$Populater', '$BaseClassName$LandingPopulater']},
     {type: 'list',  name: 'viewTemplate',       message: 'Choose a template for the view',      choices: ['Detail', 'Index']},
-    {type: 'list',  name: 'viewModelTemplate',  message: 'Choose a template for the viewModel', choices: ['$BaseClassName$ViewModel', '$BaseClassName$LandingViewModel(future template)']},
+    {type: 'list',  name: 'viewModelTemplate',  message: 'Choose a template for the viewModel', choices: ['$BaseClassName$ViewModel', '$BaseClassName$LandingViewModel']},
 ];
 
 

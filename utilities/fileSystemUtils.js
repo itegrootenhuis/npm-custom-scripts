@@ -1,10 +1,8 @@
 var exports = module.exports = {};
-const fs = require('fs');
-const promise = require('promise');
-
+const fs    = require('fs');
 
 exports.getFileExtension = async function (templateName){
-    return new promise(resolve => {
+    return new Promise(resolve => {
         if(templateName.includes('Index') || templateName.includes('Detail')){
             resolve('.cshtml');
         }
@@ -14,7 +12,7 @@ exports.getFileExtension = async function (templateName){
     });
 }
 
-exports.fsOptions = async function(targetPath, templateName, fileExtension, baseClassName, baseNamespace){
+exports.replaceOptions = async function(targetPath, templateName, fileExtension, baseClassName, baseNamespace){
     var file;
 
     if(fileExtension.includes('.cshtml')){
@@ -27,8 +25,8 @@ exports.fsOptions = async function(targetPath, templateName, fileExtension, base
     return new Promise (resolve => {
         resolve(options = {
             files: file,
-            from: [/\$BaseClassName\$/g, /\$baseclassname\$/g, /\$BaseNamespace\$/g],
-            to: [baseClassName, baseClassName.toLowerCase(), baseNamespace]
+            from: [/\$BaseClassName\$/g, /\$baseclassname\$/g, /\$BaseClassNamePlural\$/g, /\$BaseNamespace\$/g],
+            to: [baseClassName, baseClassName.toLowerCase(), baseClassName + 's', baseNamespace]
         });
     });
 }
