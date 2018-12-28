@@ -6,11 +6,7 @@
     "projectDirectory": ""
   },
   "scripts": {
-    "new": "npm run prompt && npm run --silent generate-populater & npm run --silent generate-viewmodel",
-    "prompt": "node prompt.js",
-    "main": "node program.js",
-    "generate-populater": "node generate-populater.js",
-    "generate-viewmodel": "node generate-viewmodel.js"
+    "main": "node program.js"
   },
   "main": "index.js",
   "author": "",

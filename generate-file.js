@@ -19,8 +19,8 @@ exports.getTemplate = async function(templateName, projectRoot, fileType, baseCl
 
 
 exports.updateTemplate = async function(targetPath, templateName, baseClassName, baseNamespace, fileType){
-  let fileExtension = await helpers.fileUtils.getFileExtension(templateName); 
-  let options       = await helpers.fileUtils.fsOptions(targetPath, templateName, fileExtension, baseClassName, baseNamespace);
+  let fileExtension = await helpers.fsUtils.getFileExtension(templateName); 
+  let options       = await helpers.fsUtils.replaceOptions(targetPath, templateName, fileExtension, baseClassName, baseNamespace);
 
   console.log('updating file...')
   
@@ -34,7 +34,7 @@ exports.updateTemplate = async function(targetPath, templateName, baseClassName,
             resolve(fileType + ' updated success!');
           }
           else{
-            resolve(helpers.fileUtils.renameFile(targetPath, templateName, baseClassName, fileType, fileExtension));
+            resolve(helpers.fsUtils.renameFile(targetPath, templateName, baseClassName, fileType, fileExtension));
           }
 
         })

@@ -6,12 +6,12 @@ const viewModelFolderName   = 'ViewModels';
 
 
 let questions = [
-    {type: 'input', name: 'baseClassName',      message: 'Enter the baseClassName'},
-    {type: 'input', name: 'baseNamespace',      message: 'Enter the baseNamespace'},
-    {type: 'input', name: 'projectRoot',        message: 'Enter the project root (right click to paste)'},
-    {type: 'list',  name: 'populaterTemplate',  message: 'Choose a template for the populater', choices: ['$BaseClassName$Populater', '$BaseClassName$LandingPopulater(future template)']},
+    {type: 'input', name: 'baseClassName',      message: 'Enter the baseClassName', validate: answer => { return new Promise (resolve => resolve(notNull(answer, 'BaseClassName is required'))) }},
+    {type: 'input', name: 'baseNamespace',      message: 'Enter the baseNamespace', validate: answer => { return new Promise (resolve => resolve(notNull(answer, 'BaseNamespace is required'))) }},
+    {type: 'input', name: 'projectRoot',        message: 'Enter the project root (right click to paste)', validate: answer => { return new Promise (resolve => resolve(notNull(answer, 'Project root is required'))) }},
+    {type: 'list',  name: 'populaterTemplate',  message: 'Choose a template for the populater', choices: ['$BaseClassName$Populater', '$BaseClassName$LandingPopulater']},
     {type: 'list',  name: 'viewTemplate',       message: 'Choose a template for the view',      choices: ['Detail', 'Index']},
-    {type: 'list',  name: 'viewModelTemplate',  message: 'Choose a template for the viewModel', choices: ['$BaseClassName$ViewModel', '$BaseClassName$LandingViewModel(future template)']},
+    {type: 'list',  name: 'viewModelTemplate',  message: 'Choose a template for the viewModel', choices: ['$BaseClassName$ViewModel', '$BaseClassName$LandingViewModel']},
 ];
 
 
@@ -40,4 +40,16 @@ async function buildFile (answers, fileType){
             .then(targetPath => generateFile.updateTemplate(targetPath, answers.viewModelTemplate, answers.baseClassName, answers.baseNamespace, fileType))
                 .then(message => console.log(message));
     }
+}
+
+
+async function notNull(answer, errorMessage){
+    return new Promise(resolve => {
+        if(answer){
+            resolve(true);
+        }
+        else{
+            resolve(errorMessage);
+        }
+    });
 }

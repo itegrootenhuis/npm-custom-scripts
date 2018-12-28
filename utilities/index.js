@@ -1,12 +1,12 @@
-const copyFileUtil = require('./copyFileUtil');
+const copyFileUtil  = require('./copyFileUtil');
 const directoryPath = require('./getDirectoryPath');
-const fileUtils = require('./fileSystemUtils');
+const fsUtils       = require('./fileSystemUtils');
 
 
 module.exports = {
     copyFileUtil: copyFileUtil,
     dirPath: directoryPath,
-    fileUtils: fileUtils
+    fsUtils: fsUtils
 }
 
 
