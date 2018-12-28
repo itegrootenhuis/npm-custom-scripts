@@ -44,7 +44,7 @@ exports.renameFile = async function (targetPath, templateName, baseClassName, fi
               if (err) throw err;
         
               resolve(fileType + ' updated success!');
-          });
+            });
     });
 }
 
