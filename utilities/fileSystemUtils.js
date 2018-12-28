@@ -1,5 +1,6 @@
 var exports = module.exports = {};
 const fs    = require('fs');
+const regex = /([^\$]+$)/g;
 
 exports.getFileExtension = async function (templateName){
     return new Promise(resolve => {
@@ -32,14 +33,31 @@ exports.replaceOptions = async function(targetPath, templateName, fileExtension,
 }
 
 exports.renameFile = async function (targetPath, templateName, baseClassName, fileType, fileExtension){
-    return new promise(resolve => {
+    let oldPath = await getOldPath(targetPath, templateName, fileExtension);
+    let newPath = await getNewPath(targetPath, baseClassName, templateName, fileExtension);
+
+    return new Promise(resolve => {
         fs.rename(
-            targetPath + '\\' + templateName + fileExtension,
-            targetPath + '\\' + baseClassName + fileType + fileExtension, 
+            oldPath,
+            newPath,
             (err) =>{
               if (err) throw err;
         
               resolve(fileType + ' updated success!');
           });
+    });
+}
+
+async function getOldPath(targetPath, templateName, fileExtension){
+    return new Promise (resolve => {
+        resolve(targetPath + '\\' + templateName + fileExtension);
+    });
+}
+
+async function getNewPath(targetPath, baseClassName, templateName, fileExtension){
+    let fileName = templateName.match(regex);
+
+    return new Promise(resolve => {
+        resolve(targetPath + '\\' + baseClassName + fileName + fileExtension);
     });
 }
