@@ -44,3 +44,27 @@ exports.updateTemplate = async function(targetPath, templateName, baseClassName,
     }, 2000);
   })
 }
+
+
+
+exports.getPageTypeCode = async function(pageTypeClassName, pageTypeNamespace, projectRoot, baseNamespace){
+  //build utility to get kentico dll root from the projectRoot
+  let kenticoDllRoot = await helpers.dirPath.getDirectoryPath(projectRoot, 'CMS\\bin');
+  console.log('dllRoot: ', kenticoDllRoot)
+  //build utility to get the project connection string from the projectRoot
+  let connectionStringPath = await helpers.dirPath.getDirectoryPath(projectRoot, baseNamespace + '.Web');
+  console.log('connectionStringPath: ', connectionStringPath)
+
+  let connectionString = await helpers.fsUtils.getConnectionString(connectionStringPath);
+  
+  console.log(connectionString)
+  
+  //call the pageTypeGenerator.exe with the parameters (pageTypeClassName, pageTypeNamespace, kenticoDllRoot, projectRoot, connectionString)
+  //build utility to get an array of properties from the pageTypeCode; save array for later when building the viewModel
+  //save pageTypeCode in the .Core project 
+  
+    //update namespace if needed (first try to figure out a way in the exe file)
+  
+  
+  //return confirmation message or error message
+}

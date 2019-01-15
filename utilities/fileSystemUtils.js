@@ -1,6 +1,7 @@
-var exports = module.exports = {};
-const fs    = require('fs');
-const regex = /([^\$]+$)/g;
+var exports     = module.exports = {};
+const getsubdir = require('./getDirectoryPath');
+const fs        = require('fs');
+const regex     = /([^\$]+$)/g;
 
 exports.getFileExtension = async function (templateName){
     return new Promise(resolve => {
@@ -59,5 +60,28 @@ async function getNewPath(targetPath, baseClassName, templateName, fileExtension
 
     return new Promise(resolve => {
         resolve(targetPath + '\\' + baseClassName + fileName + fileExtension);
+    });
+}
+
+
+exports.getConnectionString = async function(getConnectionStringPath){
+    return new Promise(resolve => {
+        fs.readdir(getConnectionStringPath, function(err, items){
+            if(err) throw err;
+            console.log('items', items)
+
+            items.forEach(item => {
+                // console.log('item ',item)
+
+                if(item == 'Web.config'){
+                    console.log('++++++++++++++found web config')
+                    fs.readFile(getConnectionStringPath + '\\' + item, function(err, data){
+                        if(err) throw err;
+
+                        resolve(data);
+                    });
+                }
+            });
+        });
     });
 }

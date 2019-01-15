@@ -9,6 +9,8 @@ let questions = [
     {type: 'input', name: 'baseClassName',      message: 'Enter the baseClassName', validate: answer => { return new Promise (resolve => resolve(notNull(answer, 'BaseClassName is required'))) }},
     {type: 'input', name: 'baseNamespace',      message: 'Enter the baseNamespace', validate: answer => { return new Promise (resolve => resolve(notNull(answer, 'BaseNamespace is required'))) }},
     {type: 'input', name: 'projectRoot',        message: 'Enter the project root (right click to paste)', validate: answer => { return new Promise (resolve => resolve(notNull(answer, 'Project root is required'))) }},
+    {type: 'input', name: 'pageTypeClassName',  message: 'Enter the pageType class name (right click to paste)', validate: answer => { return new Promise (resolve => resolve(notNull(answer, 'PageType class name is required'))) }},
+    {type: 'input', name: 'pageTypeNamespace',  message: 'Enter the pageType namespace (right click to paste)', validate: answer => { return new Promise (resolve => resolve(notNull(answer, 'PageType namespace is required'))) }},
     {type: 'list',  name: 'populaterTemplate',  message: 'Choose a template for the populater', choices: ['$BaseClassName$Populater', '$BaseClassName$LandingPopulater']},
     {type: 'list',  name: 'viewTemplate',       message: 'Choose a template for the view',      choices: ['Detail', 'Index']},
     {type: 'list',  name: 'viewModelTemplate',  message: 'Choose a template for the viewModel', choices: ['$BaseClassName$ViewModel', '$BaseClassName$LandingViewModel']},
@@ -16,11 +18,18 @@ let questions = [
 
 
 inquirer.prompt(questions)
-    .then(answers => Promise.all([ 
-        buildFile(answers, populaterFolderName), 
-        buildFile(answers, viewFolderName),
-        buildFile(answers, viewModelFolderName)
+    .then(answers => Promise.all([
+        getPageTypeCode(answers), 
+        // buildFile(answers, populaterFolderName), 
+        // buildFile(answers, viewFolderName),
+        // buildFile(answers, viewModelFolderName)
     ]));
+
+
+async function getPageTypeCode (answers){
+    return generateFile.getPageTypeCode(answers.pageTypeClassName, answers.pageTypeNamespace, answers.projectRoot, answers.baseNamespace)
+        .then(message => console.log(message));
+}
 
 
 async function buildFile (answers, fileType){
