@@ -1,7 +1,9 @@
 var exports           = module.exports = {};
+const { execFile }    = require('child_process');
 const replace         = require('replace-in-file');
 const helpers         = require('./utilities/index');
 // const templateFolder  = './templates'; //=====LOCAL
+const { spawnSync } = require('child_process');
 const templateFolder  = 'S:\\VSTemplates\\Templates\\MVC'; // ======WORK
 
 
@@ -48,16 +50,19 @@ exports.updateTemplate = async function(targetPath, templateName, baseClassName,
 
 
 exports.getPageTypeCode = async function(pageTypeClassName, pageTypeNamespace, projectRoot, baseNamespace){
-  //build utility to get kentico dll root from the projectRoot
-  let kenticoDllRoot = await helpers.dirPath.getDirectoryPath(projectRoot, 'CMS\\bin');
-  console.log('dllRoot: ', kenticoDllRoot)
-  //build utility to get the project connection string from the projectRoot
+  let appPath = 'C:\\Users\\itegrootenhuis\\Documents\\BZS\\PageTypeGenerator\\PageTypeApp\\bin\\Debug\\PageTypeApp.exe';
   let connectionStringPath = await helpers.dirPath.getDirectoryPath(projectRoot, baseNamespace + '.Web');
-  console.log('connectionStringPath: ', connectionStringPath)
+  let connectionString = await helpers.fsUtils.getConnectionString(await connectionStringPath);
+  let kenticoDllRoot = await helpers.dirPath.getDirectoryPath(projectRoot, 'CMS\\bin');
+  kenticoDllRoot = kenticoDllRoot + '\\';
 
-  let connectionString = await helpers.fsUtils.getConnectionString(connectionStringPath);
-  
-  console.log(connectionString)
+  return new Promise(resolve => {
+    ls = spawnSync( appPath, [pageTypeClassName, pageTypeNamespace, kenticoDllRoot, projectRoot, connectionString] );
+    // console.log( `stderr: ${ls.stderr.toString()}` );
+    // console.log( `stdout: ${ls.stdout.toString()}` );
+    resolve(`${ls.stdout.toString()}`)
+  });
+
   
   //call the pageTypeGenerator.exe with the parameters (pageTypeClassName, pageTypeNamespace, kenticoDllRoot, projectRoot, connectionString)
   //build utility to get an array of properties from the pageTypeCode; save array for later when building the viewModel
@@ -67,4 +72,19 @@ exports.getPageTypeCode = async function(pageTypeClassName, pageTypeNamespace, p
   
   
   //return confirmation message or error message
+}
+
+
+exports.savePagetype = async function(projectRoot, pageTypeCode){
+  let targetFolder = 'Models\\PageTypes';
+  let fileLocation = await helpers.dirPath.getDirectoryPath(projectRoot, targetFolder);
+  fileLocation = fileLocation + '\\'
+  
+
+  return new Promise(resolve => {
+    let message = helpers.fsUtils.savePagetype(fileLocation, pageTypeCode);
+    resolve(message);
+
+    // resolve(await helpers.fsUtils.savePagetype(await helpers.dirPath(projectRoot, targetFolder), pageTypeCode));
+  })
 }

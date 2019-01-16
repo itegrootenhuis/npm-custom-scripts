@@ -17,6 +17,7 @@
     "babel-runtime": "^6.26.0",
     "copy": "^0.3.2",
     "create-file": "^1.0.1",
+    "extract-string": "^1.0.2",
     "find": "^0.2.9",
     "fs": "0.0.1-security",
     "fs-finder": "^1.8.1",
@@ -28,6 +29,7 @@
     "prompt-choices": "^5.0.0",
     "prompt-list": "^3.2.0",
     "rename": "^1.0.4",
-    "replace-in-file": "^3.4.2"
+    "replace-in-file": "^3.4.2",
+    "substrings": "^1.1.1"
   }
 }

@@ -8,10 +8,15 @@ exports.getDirectoryPath = async function (projectRoot, targetFolder){
       dir.subdirs(projectRoot, function(err, subdirs) {
         if (err) throw err;
 
-        subdirs.forEach(subdir => {
+        subdirs.some(subdir => {
+          if(subdir.includes(targetFolder + '.')){
+            return
+          }
+
           if(subdir.includes(targetFolder)){
-            
+            // console.log("++++++++++++++", subdir, targetFolder)
             resolve(subdir);
+            return subdir.includes(targetFolder);
           }
         });
       });

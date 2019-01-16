@@ -1,7 +1,8 @@
 var exports     = module.exports = {};
-const getsubdir = require('./getDirectoryPath');
+var extract     = require('extract-string');
 const fs        = require('fs');
 const regex     = /([^\$]+$)/g;
+
 
 exports.getFileExtension = async function (templateName){
     return new Promise(resolve => {
@@ -68,20 +69,31 @@ exports.getConnectionString = async function(getConnectionStringPath){
     return new Promise(resolve => {
         fs.readdir(getConnectionStringPath, function(err, items){
             if(err) throw err;
-            console.log('items', items)
 
             items.forEach(item => {
                 // console.log('item ',item)
 
                 if(item == 'Web.config'){
-                    console.log('++++++++++++++found web config')
-                    fs.readFile(getConnectionStringPath + '\\' + item, function(err, data){
+                    fs.readFile(getConnectionStringPath + '\\' + item, 'utf8', function(err, data){
                         if(err) throw err;
 
-                        resolve(data);
+                        var config = extract(data)
+                            .pattern('connectionString="{connectionString}"');
+
+                        resolve(config[0].connectionString);
                     });
                 }
             });
         });
+    });
+}
+
+exports.savePagetype = async function(fileLocation, pageTypeCode){
+    return new Promise(resolve => {
+        fs.writeFile(fileLocation, pageTypeCode, function(err) {
+            if(err) throw(err);
+        
+            resolve("The PageType file was saved!");
+        }); 
     });
 }
