@@ -28,7 +28,7 @@ inquirer.prompt(questions)
 
 async function getPageTypeCode (answers){
     return generateFile.getPageTypeCode(answers.pageTypeClassName, answers.pageTypeNamespace, answers.projectRoot, answers.baseNamespace)
-        .then(pageTypeCode => generateFile.savePagetype(answers.projectRoot, pageTypeCode))
+        .then(pageTypeCode => generateFile.savePagetype(answers.projectRoot, answers.pageTypeClassName, pageTypeCode))
             .then(message => console.log("final: ", message));
 }
 

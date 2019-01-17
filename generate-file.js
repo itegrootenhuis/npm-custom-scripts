@@ -50,7 +50,7 @@ exports.updateTemplate = async function(targetPath, templateName, baseClassName,
 
 
 exports.getPageTypeCode = async function(pageTypeClassName, pageTypeNamespace, projectRoot, baseNamespace){
-  console.log('Fetching page type code...')
+  console.log('Fetching PageType code...')
   let appPath = 'C:\\Users\\itegrootenhuis\\Documents\\BZS\\PageTypeGenerator\\PageTypeApp\\bin\\Debug\\PageTypeApp.exe';
   let connectionStringPath = await helpers.dirPath.getDirectoryPath(projectRoot, baseNamespace + '.Web');
   let connectionString = await helpers.fsUtils.getConnectionString(await connectionStringPath);
@@ -62,33 +62,25 @@ exports.getPageTypeCode = async function(pageTypeClassName, pageTypeNamespace, p
     // console.log( `stderr: ${ls.stderr.toString()}` );
     // console.log( `stdout: ${ls.stdout.toString()}` );
     if(`${ls.stdout.toString()}`){
-      console.log('Page type code fetched!')
+      console.log('Successfully feteched PageType code!')
       resolve(`${ls.stdout.toString()}`)
     }
+    else{
+      console.log('Could\'t find a PageType with the name ' + pageTypeClassName)
+    }
   });
-
-  
-  //call the pageTypeGenerator.exe with the parameters (pageTypeClassName, pageTypeNamespace, kenticoDllRoot, projectRoot, connectionString)
-  //build utility to get an array of properties from the pageTypeCode; save array for later when building the viewModel
-  //save pageTypeCode in the .Core project 
-  
-    //update namespace if needed (first try to figure out a way in the exe file)
-  
-  
-  //return confirmation message or error message
 }
 
 
-exports.savePagetype = async function(projectRoot, pageTypeCode){
+exports.savePagetype = async function(projectRoot, pageTypeClassName, pageTypeCode){
   let targetFolder = 'Models\\PageTypes';
   let fileLocation = await helpers.dirPath.getDirectoryPath(projectRoot, targetFolder);
   fileLocation = fileLocation + '\\'
+
+  let file = fileLocation + pageTypeClassName + '.cs';
   
-
+  
   return new Promise(resolve => {
-    let message = helpers.fsUtils.savePagetype(fileLocation, pageTypeCode);
-    resolve(message);
-
-    // resolve(await helpers.fsUtils.savePagetype(await helpers.dirPath(projectRoot, targetFolder), pageTypeCode));
-  })
+    resolve(helpers.fsUtils.savePagetype(file, pageTypeCode));
+  });
 }

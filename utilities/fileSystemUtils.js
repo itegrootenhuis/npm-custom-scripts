@@ -71,8 +71,6 @@ exports.getConnectionString = async function(getConnectionStringPath){
             if(err) throw err;
 
             items.forEach(item => {
-                // console.log('item ',item)
-
                 if(item == 'Web.config'){
                     fs.readFile(getConnectionStringPath + '\\' + item, 'utf8', function(err, data){
                         if(err) throw err;
@@ -88,12 +86,14 @@ exports.getConnectionString = async function(getConnectionStringPath){
     });
 }
 
-exports.savePagetype = async function(fileLocation, pageTypeCode){
+exports.savePagetype = async function(file, pageTypeCode){
     return new Promise(resolve => {
-        fs.writeFile(fileLocation, pageTypeCode, function(err) {
+        try{
+            fs.appendFileSync(file, pageTypeCode, 'utf8');
+            resolve("Successfully saved the PageType!");
+        }
+        catch(err){
             if(err) throw(err);
-        
-            resolve("The PageType file saved!");
-        }); 
+        }
     });
 }
