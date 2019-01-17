@@ -50,6 +50,7 @@ exports.updateTemplate = async function(targetPath, templateName, baseClassName,
 
 
 exports.getPageTypeCode = async function(pageTypeClassName, pageTypeNamespace, projectRoot, baseNamespace){
+  console.log('Fetching page type code...')
   let appPath = 'C:\\Users\\itegrootenhuis\\Documents\\BZS\\PageTypeGenerator\\PageTypeApp\\bin\\Debug\\PageTypeApp.exe';
   let connectionStringPath = await helpers.dirPath.getDirectoryPath(projectRoot, baseNamespace + '.Web');
   let connectionString = await helpers.fsUtils.getConnectionString(await connectionStringPath);
@@ -60,7 +61,10 @@ exports.getPageTypeCode = async function(pageTypeClassName, pageTypeNamespace, p
     ls = spawnSync( appPath, [pageTypeClassName, pageTypeNamespace, kenticoDllRoot, projectRoot, connectionString] );
     // console.log( `stderr: ${ls.stderr.toString()}` );
     // console.log( `stdout: ${ls.stdout.toString()}` );
-    resolve(`${ls.stdout.toString()}`)
+    if(`${ls.stdout.toString()}`){
+      console.log('Page type code fetched!')
+      resolve(`${ls.stdout.toString()}`)
+    }
   });
 
   

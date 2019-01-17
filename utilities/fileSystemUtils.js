@@ -93,7 +93,7 @@ exports.savePagetype = async function(fileLocation, pageTypeCode){
         fs.writeFile(fileLocation, pageTypeCode, function(err) {
             if(err) throw(err);
         
-            resolve("The PageType file was saved!");
+            resolve("The PageType file saved!");
         }); 
     });
 }
