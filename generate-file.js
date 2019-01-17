@@ -7,8 +7,10 @@ const { spawnSync } = require('child_process');
 const templateFolder  = 'S:\\VSTemplates\\Templates\\MVC'; // ======WORK
 
 
-exports.getTemplate = async function(templateName, projectRoot, fileType, baseClassName){
-  let targetPath    = await helpers.dirPath.getDirectoryPath(projectRoot, fileType);   
+exports.getTemplate = async function(templateName, projectRoot, fileType, baseClassName, baseNamespace){
+  let targetFolder =  baseNamespace + '.Web\\' + fileType;
+  
+  let targetPath    = await helpers.dirPath.getDirectoryPath(projectRoot, targetFolder);   
   let templatePath  = await helpers.dirPath.getDirectoryPath(templateFolder, fileType);
   let template      = templatePath + '\\' + templateName + '.*';
 
@@ -80,7 +82,7 @@ exports.savePagetype = async function(projectRoot, pageTypeClassName, pageTypeCo
   let file = fileLocation + pageTypeClassName + '.cs';
   
   
-  return new Promise(resolve => {
-    resolve(helpers.fsUtils.savePagetype(file, pageTypeCode));
+  return new Promise(async resolve => {
+    resolve(await helpers.fsUtils.savePagetype(file, pageTypeCode));
   });
 }

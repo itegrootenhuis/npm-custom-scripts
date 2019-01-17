@@ -19,34 +19,35 @@ let questions = [
 
 inquirer.prompt(questions)
     .then(answers => Promise.all([
-        getPageTypeCode(answers), 
-        // buildFile(answers, populaterFolderName), 
-        // buildFile(answers, viewFolderName),
-        // buildFile(answers, viewModelFolderName)
+        getPageTypeCode(answers).then(() => {
+            buildFile(answers, populaterFolderName), 
+            buildFile(answers, viewFolderName),
+            buildFile(answers, viewModelFolderName)
+        }), 
     ]));
 
 
 async function getPageTypeCode (answers){
     return generateFile.getPageTypeCode(answers.pageTypeClassName, answers.pageTypeNamespace, answers.projectRoot, answers.baseNamespace)
         .then(pageTypeCode => generateFile.savePagetype(answers.projectRoot, answers.pageTypeClassName, pageTypeCode))
-            .then(message => console.log("final: ", message));
+            .then(message => console.log(message));
 }
 
 
 async function buildFile (answers, fileType){
     if(fileType === 'Populaters'){
-        return generateFile.getTemplate(answers.populaterTemplate, answers.projectRoot, fileType, answers.baseClassName)
+        return generateFile.getTemplate(answers.populaterTemplate, answers.projectRoot, fileType, answers.baseClassName, answers.baseNamespace)
             .then(targetPath => generateFile.updateTemplate(targetPath, answers.populaterTemplate, answers.baseClassName, answers.baseNamespace, fileType))
                 .then(message => console.log(message));
         
     }
     else if(fileType === 'Views'){
-        return generateFile.getTemplate(answers.viewTemplate, answers.projectRoot, fileType, answers.baseClassName)
+        return generateFile.getTemplate(answers.viewTemplate, answers.projectRoot, fileType, answers.baseClassName, answers.baseNamespace)
             .then(targetPath => generateFile.updateTemplate(targetPath, answers.viewTemplate, answers.baseClassName, answers.baseNamespace, fileType))
                 .then(message => console.log(message));
     }
     else if(fileType === 'ViewModels'){
-        return generateFile.getTemplate(answers.viewModelTemplate, answers.projectRoot, fileType, answers.baseClassName)
+        return generateFile.getTemplate(answers.viewModelTemplate, answers.projectRoot, fileType, answers.baseClassName, answers.baseNamespace)
             .then(targetPath => generateFile.updateTemplate(targetPath, answers.viewModelTemplate, answers.baseClassName, answers.baseNamespace, fileType))
                 .then(message => console.log(message));
     }
