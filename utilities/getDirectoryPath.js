@@ -9,7 +9,7 @@ exports.getDirectoryPath = async function (projectRoot, targetFolder){
         if (err) throw err;
         
         subdirs.some(subdir => {
-          if(subdir.includes(targetFolder)){
+          if(subdir.includes(targetFolder) && !subdir.includes('.Test')){
             // console.log("++++++++++++++", subdir, targetFolder)
             resolve(subdir);
             return subdir.includes(targetFolder);

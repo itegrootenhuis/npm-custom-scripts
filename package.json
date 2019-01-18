@@ -6,7 +6,8 @@
     "projectDirectory": ""
   },
   "scripts": {
-    "main": "node program.js"
+    "main": "node program.js",
+    "bzs-helper": "node program.js"
   },
   "main": "index.js",
   "author": "",

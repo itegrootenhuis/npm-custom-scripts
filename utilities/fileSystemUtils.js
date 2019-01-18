@@ -15,30 +15,11 @@ exports.getFileExtension = async function (templateName){
     });
 }
 
-exports.replaceOptions = async function(targetPath, templateName, fileExtension, baseClassName, baseNamespace){
-    var file;
-
-    if(fileExtension.includes('.cshtml')){
-        file = targetPath + '\\' + baseClassName + '\\' + templateName + fileExtension;
-    }
-    else{
-        file = targetPath + '\\' + templateName + fileExtension;
-    }
-    
-    return new Promise (resolve => {
-        resolve(options = {
-            files: file,
-            from: [/\$BaseClassName\$/g, /\$baseclassname\$/g, /\$BaseClassNamePlural\$/g, /\$BaseNamespace\$/g],
-            to: [baseClassName, baseClassName.toLowerCase(), baseClassName + 's', baseNamespace]
-        });
-    });
-}
-
 exports.renameFile = async function (targetPath, templateName, baseClassName, fileType, fileExtension){
     let oldPath = await getOldPath(targetPath, templateName, fileExtension);
     let newPath = await getNewPath(targetPath, baseClassName, templateName, fileExtension);
 
-    return new Promise(resolve => {
+    return new Promise(async resolve => {
         fs.rename(
             oldPath,
             newPath,
@@ -65,14 +46,14 @@ async function getNewPath(targetPath, baseClassName, templateName, fileExtension
 }
 
 
-exports.getConnectionString = async function(getConnectionStringPath){
+exports.getConnectionString = async function(connectionStringPath){
     return new Promise(resolve => {
-        fs.readdir(getConnectionStringPath, function(err, items){
+        fs.readdir(connectionStringPath, function(err, items){
             if(err) throw err;
 
             items.forEach(item => {
                 if(item == 'Web.config'){
-                    fs.readFile(getConnectionStringPath + '\\' + item, 'utf8', function(err, data){
+                    fs.readFile(connectionStringPath + '\\' + item, 'utf8', function(err, data){
                         if(err) throw err;
 
                         var config = extract(data)
@@ -90,7 +71,7 @@ exports.savePagetype = async function(file, pageTypeCode){
     return new Promise(resolve => {
         try{
             fs.appendFileSync(file, pageTypeCode, 'utf8');
-            resolve("Successfully saved the PageType!");
+            resolve(file);
         }
         catch(err){
             if(err) throw(err);
